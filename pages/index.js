@@ -15,9 +15,14 @@ export default function index() {
   const [consumedSecond, setConsumedSecond] = useState(0);
   const [isTimeUp, setIsTimeUp] = useState(false);
 
+  const [openSetting, setOpenSetting] = useState(false);
+
   const [stage, setStage] = useState(0);
 
   const alarmRef = useRef();
+  const pomodoroRef = useRef();
+  const shortBreakRef = useRef();
+  const longBreakRef = useRef();
 
   const switchStage = (index) => {
     const isYes =
@@ -124,7 +129,7 @@ export default function index() {
         style={{ backgroundColor: "#110026" }}
       >
         <div className="max-w-4xl min-h-screen mx-auto">
-          <Navbar />
+          <Navbar setOpenSetting={setOpenSetting} />
           <Timer
             stage={stage}
             switchStage={switchStage}
@@ -138,7 +143,13 @@ export default function index() {
           />
           <About />
           <Alarm ref={alarmRef} />
-          <ModalSetting/>
+          <ModalSetting
+            openSetting={openSetting}
+            setOpenSetting={setOpenSetting}
+            pomodoroRef={pomodoroRef}
+            shortBreakRef={shortBreakRef}
+            longBreakRef={longBreakRef}
+          />
         </div>
       </div>
     </>
