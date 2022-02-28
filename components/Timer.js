@@ -6,7 +6,10 @@ const Timer = ({
   getTickingTime,
   seconds,
   ticking,
-  setTicking,
+  startTimer,
+  muteAlarm,
+  isTimeUp,
+  reset
 }) => {
   const options = ["Pomodoro", "Short Break", "Long Break"];
 
@@ -34,13 +37,23 @@ const Timer = ({
           {getTickingTime()}:{seconds.toString().padStart(2, "0")}
         </h1>
       </div>
-
-      <button
-        className="px-16 py-2 text-2xl rounded-md bg-white text-blue-500 uppercase font-bold"
-        onClick={() => setTicking((ticking) => !ticking)}
-      >
-        {ticking ? "Stop" : "Start"}
-      </button>
+      <div className="flex gap-4 items-center">
+        <button
+          className="px-16 py-2 text-2xl rounded-md bg-white text-blue-500 uppercase font-bold"
+          onClick={startTimer}
+        >
+          {ticking ? "Stop" : "Start"}
+        </button>
+        {isTimeUp && (
+          <img
+            className="cursor-pointer"
+            onClick={muteAlarm}
+            src="mute_alarm.png"
+            alt=""
+          />
+        )}
+      </div>
+      {ticking && <button className="uppercase text-white mt-5" onClick={reset}>Reset</button>}
     </div>
   );
 };

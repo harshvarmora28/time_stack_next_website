@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Timer from "../components/Timer";
 import About from "../components/About";
 import Alarm from "../components/Alarm";
+import ModalSetting from "../components/ModalSetting";
 
 export default function index() {
   const [pomodoro, setPomodoro] = useState(20);
@@ -12,21 +13,24 @@ export default function index() {
   const [seconds, setSeconds] = useState(0);
   const [ticking, setTicking] = useState(false);
   const [consumedSecond, setConsumedSecond] = useState(0);
+  const [isTimeUp, setIsTimeUp] = useState(false);
 
   const [stage, setStage] = useState(0);
 
   const alarmRef = useRef();
 
   const switchStage = (index) => {
-	const isYes = consumedSecond && stage !== index ? confirm("Are you sure you want to switch?") : false;
-    
-	if(isYes){
-		reset();
-		setStage(index);
-	}
-	else if(!consumedSecond){
-		setStage(index);
-	}
+    const isYes =
+      consumedSecond && stage !== index
+        ? confirm("Are you sure you want to switch?")
+        : false;
+
+    if (isYes) {
+      reset();
+      setStage(index);
+    } else if (!consumedSecond) {
+      setStage(index);
+    }
   };
 
   const getTickingTime = () => {
@@ -50,21 +54,21 @@ export default function index() {
   };
 
   const reset = () => {
-	setConsumedSecond(0);
-	setTicking(false);
-	setSeconds(0);
-	setPomodoro(20);
-	setShortBreak(5);
-	setLongBreak(20);
-  }
+    setConsumedSecond(0);
+    setTicking(false);
+    setSeconds(0);
+    setPomodoro(20);
+    setShortBreak(5);
+    setLongBreak(20);
+  };
 
   const timeUp = () => {
-	  reset();
+    reset();
+    setIsTimeUp(true);
 
-	  // play alarm when times up
-	  alarmRef.current.play();
-
-  }
+    // play alarm when times up
+    alarmRef.current.play();
+  };
 
   const clockTicking = () => {
     const minutes = getTickingTime();
@@ -80,15 +84,25 @@ export default function index() {
     }
   };
 
-  useEffect(() => {
+  const muteAlarm = () => {
+    alarmRef.current.pause();
+    alarmRef.current.currentTime = 0;
+  };
 
-	window.onbeforeunload = () => {
-		return consumedSecond ? "Show Warning" : null;
-	}
+  const startTimer = () => {
+    setIsTimeUp(false);
+    muteAlarm();
+    setTicking((ticking) => !ticking);
+  };
+
+  useEffect(() => {
+    window.onbeforeunload = () => {
+      return consumedSecond ? "Show Warning" : null;
+    };
 
     const timer = setInterval(() => {
       if (ticking) {
-		  setConsumedSecond((value) => value + 1);
+        setConsumedSecond((value) => value + 1);
         clockTicking();
       }
     }, 1000);
@@ -117,10 +131,14 @@ export default function index() {
             getTickingTime={getTickingTime}
             seconds={seconds}
             ticking={ticking}
-            setTicking={setTicking}
+            startTimer={startTimer}
+            muteAlarm={muteAlarm}
+            isTimeUp={isTimeUp}
+            reset={reset}
           />
           <About />
-		  <Alarm ref={alarmRef} />
+          <Alarm ref={alarmRef} />
+          <ModalSetting/>
         </div>
       </div>
     </>
