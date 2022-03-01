@@ -50,7 +50,9 @@ const About = () => {
         <div className="text-gray-300 text-sm leading-relaxed mb-6">
           Feel very free to contribute - <span className="text-white font-medium">TimeStack</span>
         </div>
+        <a href="github.com" target="_blank" className="h-full">
         <img src="github_logo.svg" alt="Github" className="w-5 ml-2 h-full" />
+        </a>
       </div>
     </div>
   );
