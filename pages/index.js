@@ -24,6 +24,16 @@ export default function index() {
   const shortBreakRef = useRef();
   const longBreakRef = useRef();
 
+
+  const updateTimeDefaultValue = () => {
+    setPomodoro(pomodoroRef.current.value);
+    setShortBreak(shortBreakRef.current.value);
+    setLongBreak(longBreakRef.current.value);
+    setOpenSetting(false);
+    setSeconds(0);
+    setConsumedSecond(0);
+  }
+
   const switchStage = (index) => {
     const isYes =
       consumedSecond && stage !== index
@@ -62,9 +72,7 @@ export default function index() {
     setConsumedSecond(0);
     setTicking(false);
     setSeconds(0);
-    setPomodoro(20);
-    setShortBreak(5);
-    setLongBreak(20);
+    updateTimeDefaultValue();
   };
 
   const timeUp = () => {
@@ -120,7 +128,7 @@ export default function index() {
   return (
     <>
       <Head>
-        <title>Time Stack - Pomodoro</title>
+        <title>{getTickingTime()}:{seconds.toString().padStart(2, "0")} - TimeStack remaining!</title>
         <link rel="icon" href="time_stack_logo_without_text.png" />
       </Head>
 
@@ -149,6 +157,7 @@ export default function index() {
             pomodoroRef={pomodoroRef}
             shortBreakRef={shortBreakRef}
             longBreakRef={longBreakRef}
+            updateTimeDefaultValue={updateTimeDefaultValue}
           />
         </div>
       </div>

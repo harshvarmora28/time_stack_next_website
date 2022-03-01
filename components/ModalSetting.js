@@ -1,6 +1,6 @@
 import React from "react";
 
-const ModalSetting = ({ pomodoroRef, shortBreakRef, longBreakRef, openSetting, setOpenSetting }) => {
+const ModalSetting = ({ pomodoroRef, shortBreakRef, longBreakRef, openSetting, setOpenSetting, updateTimeDefaultValue }) => {
   const inputs = [
     {
       value: "Pomodoro",
@@ -50,7 +50,7 @@ const ModalSetting = ({ pomodoroRef, shortBreakRef, longBreakRef, openSetting, s
             );
           })}
         </div>
-        <button className="bg-green-500 uppercase w-full mt-5 text-white rounded py-2">
+        <button className="bg-green-500 uppercase w-full mt-5 text-white rounded py-2" onClick={updateTimeDefaultValue}>
           Save
         </button>
       </div>
@@ -58,4 +58,4 @@ const ModalSetting = ({ pomodoroRef, shortBreakRef, longBreakRef, openSetting, s
   );
 };
 
-export default ModalSetting;
+export default React.memo(ModalSetting);

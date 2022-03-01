@@ -11,4 +11,4 @@ const Alarm = React.forwardRef((_, ref) => {
   )
 });
 
-export default Alarm
+export default React.memo(Alarm);

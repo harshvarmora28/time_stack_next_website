@@ -22,4 +22,4 @@ const Navbar = ({ setOpenSetting }) => {
   );
 };
 
-export default Navbar;
+export default React.memo(Navbar);
