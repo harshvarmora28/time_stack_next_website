@@ -1,7 +1,7 @@
 
 # TimeStack - Pomodoro Time management App
 
-👉 this app is only for practice purpose😅
+👉 https://timestack-byharshcreations.netlify.app/
 
 
 ## Screenshots
